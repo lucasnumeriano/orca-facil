@@ -6,7 +6,7 @@ interface ContainerProps {
 }
 
 const Container: React.FC<ContainerProps> = ({ children, className }) => {
-  const classNameContainer = ['flex-1', 'px-6', 'pt-20', 'pb-6'];
+  const classNameContainer = ['flex-1', 'px-4', 'pt-20', 'pb-6'];
   if (className) {
     classNameContainer.push(className);
   }
