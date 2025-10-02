@@ -5,8 +5,11 @@ import React, { Fragment } from 'react';
 import { View } from 'react-native';
 import T from '../components/T';
 import Container from '@/components/Container';
+import { useRouter } from 'expo-router';
 
 export default function Index() {
+  const router = useRouter();
+
   return (
     <Fragment>
       <Container className="items-center bg-slate-900">
@@ -19,7 +22,7 @@ export default function Index() {
         <View className=" my-auto flex flex-row items-center gap-10">
           <View className="flex flex-col items-center gap-5">
             <Button
-              onPress={() => alert('Button Pressed')}
+              onPress={() => router.push('/calcs-menu')}
               startIcon={<MaterialIcons name="bolt" size={48} color="#facc15" />}
             />
             <T variant="body" color="text-white">
