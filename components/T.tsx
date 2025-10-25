@@ -19,7 +19,12 @@ const T: React.FC<TProps> = ({ children, variant, color = 'text-black', align = 
     button: 'text-lg font-semibold',
   };
 
-  const className = clsx(textSize[variant], color, align);
+  const className = clsx('break-words', textSize[variant], color, align);
+
+  // Garante que children seja uma string válida
+  if (children === null || children === undefined) {
+    return null;
+  }
 
   return <Text className={cn(className)}>{children}</Text>;
 };

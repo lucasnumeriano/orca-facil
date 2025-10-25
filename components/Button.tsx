@@ -30,7 +30,7 @@ const Button: React.FC<ButtonProps> = ({
       disabled={rest.disabled}>
       {startIcon && <View>{startIcon}</View>}
       {title && (
-        <T variant="button" color={color}>
+        <T variant="button" color={color || 'text-white'}>
           {title}
         </T>
       )}
