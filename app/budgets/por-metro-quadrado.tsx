@@ -22,7 +22,7 @@ export default function BudgetBySquareMeter() {
 
   return (
     <OrcamentoProvider tipoOrcamento="por-metro-quadrado">
-      <OrcamentoPage title="Orçamento - Por Metro²" camposEspecificos={camposEspecificos} />
+      <OrcamentoPage title="Criar Orçamento - Por Metro²" camposEspecificos={camposEspecificos} />
     </OrcamentoProvider>
   );
 }

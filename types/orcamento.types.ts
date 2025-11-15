@@ -5,6 +5,7 @@ import { Material } from '@/components/MaterialInput';
  */
 export interface BaseFormData {
   // Dados padrão presentes em todos os orçamentos
+  tituloOrcamento: string;
   emitidoPor: string;
   cpfCnpjEmissor: string;
   enderecoEmissor: string;
@@ -19,7 +20,6 @@ export interface BaseFormData {
   validade: string;
   data: string;
   servico: string;
-  enviarEmail: boolean;
 }
 
 /**
@@ -71,6 +71,7 @@ export const initialFormData: FormData = {
   totalMetros: '',
 
   // Dados padrão
+  tituloOrcamento: '',
   emitidoPor: '',
   cpfCnpjEmissor: '',
   enderecoEmissor: '',
@@ -85,7 +86,6 @@ export const initialFormData: FormData = {
   validade: '',
   data: new Date().toLocaleDateString('pt-BR'),
   servico: '',
-  enviarEmail: false,
 };
 
 /**

@@ -22,7 +22,7 @@ export default function BudgetByHour() {
 
   return (
     <OrcamentoProvider tipoOrcamento="por-hora">
-      <OrcamentoPage title="Orçamento - Por Hora" camposEspecificos={camposEspecificos} />
+      <OrcamentoPage title="Criar Orçamento - Por Hora" camposEspecificos={camposEspecificos} />
     </OrcamentoProvider>
   );
 }

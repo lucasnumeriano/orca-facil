@@ -40,6 +40,7 @@ const EmissorForm: React.FC<EmissorFormProps> = ({
           value={cpfCnpj}
           onChangeText={(value) => onUpdate('cpfCnpjEmissor', normalizeCPFCNPJ(value))}
           placeholder="000.000.000-00 ou 00.000.000/0000-00"
+          keyboardType="numeric"
           maxLength={18}
         />
 

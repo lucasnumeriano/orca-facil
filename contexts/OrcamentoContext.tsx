@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useCallback } from 'react';
 import { Alert } from 'react-native';
+import { router } from 'expo-router';
 import { Material } from '@/components/MaterialInput';
 import {
   FormData,
@@ -7,6 +8,8 @@ import {
   initialFormData,
   camposObrigatoriosPorTipo,
 } from '@/types/orcamento.types';
+import { generateBudgetPDF } from '@/util/pdfGenerator';
+import { usePdfModal } from './PdfModalContext';
 
 interface OrcamentoContextData {
   formData: FormData;
@@ -17,8 +20,9 @@ interface OrcamentoContextData {
   removeMaterial: (id: string) => void;
   updateMaterial: (id: string, field: keyof Material, value: string) => void;
   validateForm: () => boolean;
-  generateBudget: () => void;
+  generateBudget: () => Promise<void>;
   resetForm: () => void;
+  isGenerating: boolean;
 }
 
 const OrcamentoContext = createContext<OrcamentoContextData>({} as OrcamentoContextData);
@@ -34,6 +38,8 @@ export const OrcamentoProvider: React.FC<OrcamentoProviderProps> = ({
 }) => {
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [materials, setMaterials] = useState<Material[]>([]);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const { openModal } = usePdfModal();
 
   const updateFormData = useCallback((field: keyof FormData, value: string | boolean) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -45,6 +51,7 @@ export const OrcamentoProvider: React.FC<OrcamentoProviderProps> = ({
       nome: '',
       valor: '',
       quantidade: '',
+      tipoMedida: 'unidades',
     };
     setMaterials((prev) => [...prev, newMaterial]);
   }, []);
@@ -73,20 +80,36 @@ export const OrcamentoProvider: React.FC<OrcamentoProviderProps> = ({
     return true;
   }, [formData, tipoOrcamento]);
 
-  const generateBudget = useCallback(() => {
+  const generateBudget = useCallback(async () => {
     if (!validateForm()) {
       return;
     }
 
-    // Aqui você pode implementar a lógica para gerar o PDF ou enviar os dados
-    Alert.alert('Sucesso', 'Orçamento gerado com sucesso!');
-    console.log('Tipo de orçamento:', tipoOrcamento);
-    console.log('Dados do formulário:', formData);
-    console.log('Materiais:', materials);
+    setIsGenerating(true);
+    try {
+      // Gerar PDF
+      const uri = await generateBudgetPDF({
+        formData,
+        materials,
+        tipoOrcamento,
+      });
 
-    // Opcional: Resetar formulário após gerar
-    // resetForm();
-  }, [formData, materials, tipoOrcamento, validateForm]);
+      // Redirecionar para home e limpar histórico
+      router.replace('/');
+
+      // Mostrar modal após um pequeno delay para garantir que a navegação ocorreu
+      setTimeout(() => {
+        openModal(uri);
+      }, 300);
+
+      Alert.alert('Sucesso', 'Orçamento gerado com sucesso!');
+    } catch (error) {
+      console.error('Erro ao gerar PDF:', error);
+      Alert.alert('Erro', 'Não foi possível gerar o orçamento. Tente novamente.');
+    } finally {
+      setIsGenerating(false);
+    }
+  }, [formData, materials, tipoOrcamento, validateForm, openModal]);
 
   const resetForm = useCallback(() => {
     setFormData(initialFormData);
@@ -106,6 +129,7 @@ export const OrcamentoProvider: React.FC<OrcamentoProviderProps> = ({
         validateForm,
         generateBudget,
         resetForm,
+        isGenerating,
       }}>
       {children}
     </OrcamentoContext.Provider>

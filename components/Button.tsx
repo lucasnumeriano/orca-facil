@@ -21,10 +21,15 @@ const Button: React.FC<ButtonProps> = ({
   bgColor = 'bg-blue-500',
   ...rest
 }) => {
+  const isDisabled = rest.disabled;
+
   return (
     <Pressable
       onPress={onPress}
-      className={cn('flex-row items-center gap-5 rounded px-4 py-2', bgColor)}
+      className={cn(
+        'flex-row items-center gap-5 rounded px-4 py-2',
+        isDisabled ? 'bg-gray-400 opacity-60' : bgColor
+      )}
       role="button"
       aria-label={title}
       disabled={rest.disabled}>

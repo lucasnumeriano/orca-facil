@@ -1,24 +1,23 @@
 import React from 'react';
 import { View } from 'react-native';
 import Input from '../Input';
-import Checkbox from '../Checkbox';
 import T from '../T';
 
 interface OrcamentoFormProps {
+  tituloOrcamento: string;
   servico: string;
   prazoEntrega: string;
   validade: string;
   data: string;
-  enviarEmail: boolean;
   onUpdate: (field: any, value: string | boolean) => void;
 }
 
 const OrcamentoForm: React.FC<OrcamentoFormProps> = ({
+  tituloOrcamento,
   servico,
   prazoEntrega,
   validade,
   data,
-  enviarEmail,
   onUpdate,
 }) => {
   return (
@@ -30,6 +29,13 @@ const OrcamentoForm: React.FC<OrcamentoFormProps> = ({
       </View>
 
       <View className="gap-3">
+        <Input
+          label="Título do Orçamento"
+          value={tituloOrcamento}
+          onChangeText={(value) => onUpdate('tituloOrcamento', value)}
+          placeholder="Ex: Orçamento de Instalação Elétrica"
+        />
+
         <Input
           label="Serviço"
           value={servico}
@@ -57,13 +63,6 @@ const OrcamentoForm: React.FC<OrcamentoFormProps> = ({
           value={data}
           onChangeText={(value) => onUpdate('data', value)}
           placeholder="DD/MM/AAAA"
-        />
-
-        <Checkbox
-          label="Enviar cópia para email do cliente"
-          checked={enviarEmail}
-          onPress={() => onUpdate('enviarEmail', !enviarEmail)}
-          containerClassName="mt-2"
         />
       </View>
     </View>

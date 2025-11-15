@@ -4,6 +4,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import Input from './Input';
 import T from './T';
 import Button from './Button';
+import TipoMedidaSelector, { TipoMedida } from './TipoMedidaSelector';
 import { normalizeDinheiro } from '@/util/normalize';
 
 export interface Material {
@@ -11,6 +12,7 @@ export interface Material {
   nome: string;
   valor: string;
   quantidade: string;
+  tipoMedida: TipoMedida;
 }
 
 interface MaterialInputProps {
@@ -77,7 +79,7 @@ const MaterialInput: React.FC<MaterialInputProps> = ({
 
               <View className="flex-1">
                 <Input
-                  label="Quantidade/Metros"
+                  label={material.tipoMedida === 'metros' ? 'Metros' : 'Quantidade'}
                   value={material.quantidade}
                   onChangeText={(value) => onUpdateMaterial(material.id, 'quantidade', value)}
                   placeholder="0"
@@ -85,9 +87,33 @@ const MaterialInput: React.FC<MaterialInputProps> = ({
                 />
               </View>
             </View>
+
+            <View>
+              <View className="mb-1">
+                <T variant="caption" color="text-slate-600">
+                  Tipo de Medida
+                </T>
+              </View>
+              <TipoMedidaSelector
+                value={material.tipoMedida}
+                onChange={(tipo) => onUpdateMaterial(material.id, 'tipoMedida', tipo)}
+              />
+            </View>
           </View>
         </View>
       ))}
+
+      {materials.length > 0 && (
+        <View className="mb-4">
+          <Button
+            title="Adicionar Outro Material"
+            onPress={onAddMaterial}
+            bgColor="bg-green-500"
+            color="text-white"
+            startIcon={<MaterialIcons name="add" size={20} color="white" />}
+          />
+        </View>
+      )}
 
       {materials.length === 0 && (
         <View className="items-center justify-center rounded-lg border-2 border-dashed border-slate-300 p-8">

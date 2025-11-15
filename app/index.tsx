@@ -1,12 +1,14 @@
 import Button from '@/components/Button';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 // import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
-import React, { Fragment, JSX } from 'react';
-import { View } from 'react-native';
+import React, { Fragment, JSX, useEffect } from 'react';
+import { View, BackHandler } from 'react-native';
 import T from '../components/T';
 import Container from '@/components/Container';
 import { useRouter } from 'expo-router';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import PdfSuccessModal from '@/components/PdfSuccessModal';
+import { usePdfModal } from '@/contexts/PdfModalContext';
 
 const ButtonCard: React.FC<{
   onPress: () => void;
@@ -26,6 +28,16 @@ const ButtonCard: React.FC<{
 
 export default function Index() {
   const router = useRouter();
+  const { showModal, closeModal, handleSharePDF, handleDownloadPDF } = usePdfModal();
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      // Impede a navegação de volta
+      return true;
+    });
+
+    return () => backHandler.remove();
+  }, []);
 
   return (
     <Fragment>
@@ -69,11 +81,11 @@ export default function Index() {
             title="Novo Orçamento"
             backgroundColor="bg-green-600"
           />
-          <ButtonCard
+          {/* <ButtonCard
             onPress={() => null}
             title="Histórico de Orçamentos"
             icon={<MaterialIcons name="format-list-numbered" size={48} color="#fff" />}
-          />
+          /> */}
         </View>
         <View className="pb-16">
           <T variant="body" color="text-white" align="text-center">
@@ -81,6 +93,14 @@ export default function Index() {
           </T>
         </View>
       </Container>
+
+      {/* Modal de Sucesso do PDF */}
+      <PdfSuccessModal
+        visible={showModal}
+        onClose={closeModal}
+        onDownload={handleDownloadPDF}
+        onShare={handleSharePDF}
+      />
     </Fragment>
   );
 }

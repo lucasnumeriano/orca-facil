@@ -22,7 +22,7 @@ export default function BudgetByDay() {
 
   return (
     <OrcamentoProvider tipoOrcamento="por-dia">
-      <OrcamentoPage title="Orçamento - Por Dia" camposEspecificos={camposEspecificos} />
+      <OrcamentoPage title="Criar Orçamento - Por Dia" camposEspecificos={camposEspecificos} />
     </OrcamentoProvider>
   );
 }

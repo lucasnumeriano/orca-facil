@@ -18,11 +18,14 @@
     "clsx": "^2.1.1",
     "expo": "~54.0.12",
     "expo-constants": "~18.0.9",
+    "expo-file-system": "^19.0.17",
     "expo-font": "~14.0.8",
     "expo-haptics": "~15.0.7",
     "expo-image": "~3.0.8",
     "expo-linking": "~8.0.8",
+    "expo-print": "^15.0.7",
     "expo-router": "~6.0.10",
+    "expo-sharing": "^14.0.7",
     "expo-splash-screen": "~31.0.10",
     "expo-status-bar": "~3.0.8",
     "expo-symbols": "~1.0.7",
@@ -51,5 +54,6 @@
     "tailwindcss": "^3.4.0",
     "typescript": "~5.9.2"
   },
-  "private": true
+  "private": true,
+  "packageManager": "yarn@4.10.3+sha512.c38cafb5c7bb273f3926d04e55e1d8c9dfa7d9c3ea1f36a4868fa028b9e5f72298f0b7f401ad5eb921749eb012eb1c3bb74bf7503df3ee43fd600d14a018266f"
 }
