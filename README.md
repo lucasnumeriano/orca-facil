@@ -68,7 +68,7 @@ npx expo start
 
 Desenvolvido por Lucas Numeriano, responsável por todo o desenvolvimento, desing, arquitetura e documentação do projeto.
 
-## Contrubuições
+## Contribuições
 Contribuições são bem-vindas!
 
 Como contribuir:
